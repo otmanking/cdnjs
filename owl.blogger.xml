@@ -1,0 +1,58 @@
+<script src="https://coranbook.site44.com/owlcarousel/Js/owl.carousel.min.js"></script>
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://coranbook.site44.com/owlcarousel/css/owl.carousel.min.css" rel="stylesheet" />
+
+<script type='text/javascript'>
+//<![CDATA[
+  function mycallback(json) {
+    for (var i = 0; i < json.feed.entry.length; i++) {
+      for (var j = 0; j < json.feed.entry[i].link.length; j++) {
+        if (json.feed.entry[i].link[j].rel == 'alternate') {
+          var postUrl = json.feed.entry[i].link[j].href;
+          break;
+        }
+      }
+	  var currentDiv = json.feed.updated.$t
+	  var postthumb = json.feed.entry[i].media$thumbnail.url
+      var postTitle = json.feed.entry[i].title.$t;
+      var postAuthor = json.feed.entry[i].author[0].name.$t;
+      var postSummary = json.feed.entry[i].summary.$t;
+      var entryShort = postSummary.substring(0, 90);
+      var entryEnd = entryShort.lastIndexOf(" ");
+      var postContent = entryShort.substring(0, entryEnd) + '...';
+      var item = '<div class="item"><a href=' + postUrl + '><img src=" '+ postthumb.replace(/\/s72\-c/,"/s"+1600+"-a") +'"><h3>'+ postTitle +'</h3></a></div>';
+      document.write(item);
+    }
+  }
+//]]>
+</script>
+	
+<div class="owl-carousel">
+<script src="/feeds/posts/summary?orderby=published&max-results=25&alt=json-in-script&callback=mycallback"></script>
+
+<script type='text/javascript'>
+//<![CDATA[
+(function($){
+$('.owl-carousel').owlCarousel({
+    loops:true,
+    center:true,
+    rtl:true,
+    autoplay:false,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:3
+        }
+    }
+});
+})(jQuery);
+//]]>
+	</script>
+</div>
